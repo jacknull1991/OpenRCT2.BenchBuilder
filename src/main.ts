@@ -13,6 +13,10 @@ const main = (): void => {
   console.log(`- ${getMechanics().length} mechanics`);
   console.log(`- ${getSecurity().length} security`);
   console.log(`- ${getEntertainers().length} entertainers`);
+
+  // open a window
+
+  // show a clickable button in the window
 };
 
 export default main;
