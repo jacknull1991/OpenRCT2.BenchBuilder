@@ -1,58 +1,61 @@
-import { Button, Settings } from "./utils";
-import { buildBenches, buildQueueTVs, buildFences, greeting } from "./actions";
+import { Button, DropDown, Settings } from "./utils";
+import { buildBenches, repairAdditions, buildFences } from "./actions";
 
 const main = (): void => {
-  console.log(`Hello stranger! Your plug-in has started!`);
-
-  // console.log(
-  //   `In your park, there are currently ${map.getAllEntities('guest').length + map.getAllEntities('staff').length} peeps`
-  // );
-  // console.log(`${map.getAllEntities('staff').length} of them is your staff.`);
-
-  // console.log('Your staff consists of:');
-  // console.log(`- ${getHandymen().length} handymen`);
-  // console.log(`- ${getMechanics().length} mechanics`);
-  // console.log(`- ${getSecurity().length} security`);
-  // console.log(`- ${getEntertainers().length} entertainers`);
-
-  const name = "BenchBuilder";
+  const name = "Bench Builder";
 
   const additions = context.getAllObjects("footpath_addition");
-  const settings = new Settings(additions);
+  const walls = context.getAllObjects("wall");
+  const settings = new Settings(additions, walls);
 
   ui.registerMenuItem(name, () => {
     // open a window
     const window = ui.openWindow({
       classification: name,
-      width: 200,
-      height: 140,
+      width: 300,
+      height: 180,
       title: name,
       id: 1,
       widgets: [
-        // button1
-        Button("Build Benches & Bins", 20, 20, 160, 20, ()=>{
+        // select Bench
+        ...DropDown("Bench:", 20, 20, 260, 10,
+          settings.selections.bench, settings.benches, (index: number) => {
+            settings.bench = index;
+          }),
+        // select bin
+        ...DropDown("Trash Bin:", 20, 40, 260, 10,
+          settings.selections.bin, settings.bins, 
+          (index: number) => {
+            settings.bin = index;
+          }),
+        Button("Build benches & bins", 20, 60, 260, 20, 
+          () => {
+            try {
+              buildBenches(settings);
+            } catch (error) {
+              ui.showError("Error Building Benches & Bins", (error as Error).message);
+            } finally {
+              window.close();
+            }
+          }),
+        Button("Repair broken additions", 20, 90, 260, 20,
+          () => {
+            try {
+              repairAdditions(settings);
+            } catch (error) {
+              ui.showError("Error repairing additions", (error as Error).message);
+            } finally {
+              window.close();
+            }
+          }),
+        // select walls
+        ...DropDown("Walls", 20, 120, 260, 10,
+          settings.selections.wall, settings.walls, (index: number) => {
+            settings.wall = index;
+          }),
+        Button("Build walls on footpaths", 20, 140, 260, 20, () => {
           try {
-            buildBenches(settings);
-          } catch (error) {
-            ui.showError("Error Building Benches & Bins", (error as Error).message);
-          } finally {
-            window.close();
-          }
-        }),
-        // button2
-        Button("Build Queue Line TVs", 20, 60, 160, 20, ()=>{
-          try {
-            buildQueueTVs();
-          } catch (error) {
-            ui.showError("Error Building TVs", (error as Error).message);
-          } finally {
-            window.close();
-          }
-        }),
-        // button3
-        Button("Build Fences", 20, 100, 160, 20, ()=>{
-          try {
-            buildFences();
+            buildFences(settings);
           } catch (error) {
             ui.showError("Error Building Fences", (error as Error).message);
           } finally {

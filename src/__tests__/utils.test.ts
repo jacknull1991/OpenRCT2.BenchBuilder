@@ -1,7 +1,41 @@
 // import { createMockStaff } from '~/testUtils';
 // import * as utils from '../utils';
+// import { Settings } from '../utils';
 
 describe('utils', () => {
+  // describe("Settings", () => {
+  //   // basic bench and bin
+  //   const additions: LoadedObject[] = [
+  //     {
+  //       index: 3,
+  //       type: "footpath_addition",
+  //       identifier: "rct2.footpath_item.bench1",
+  //       legacyIdentifier: "Bench1",
+  //       name: "Bench"
+  //     },
+  //     {
+  //       index: 2,
+  //       type: "footpath_addition",
+  //       identifier: "rct2.footpath_item.litter1",
+  //       legacyIdentifier: "Litter1",
+  //       name: "Litter Bin"
+  //     }
+  //   ];
+  //   // hedge fence
+  //   const wall: LoadedObject = {
+  //     index: 4,
+  //     type: "wall",
+  //     identifier: "rct2.scenary_wall.whg",
+  //     legacyIdentifier: "WHG",
+  //     name: "Hedge"
+  //   };
+
+  //   it("returns bench and bin and wall selection", () => {
+  //     expect.hasAssertions();
+
+      
+  //   })
+  // });
   // describe('isHandyman', () => {
   //   it('returns true if staff member is a handyman', () => {
   //     expect(utils.isHandyman(createMockStaff('handyman'))).toBe(true);
